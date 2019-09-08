@@ -1,4 +1,4 @@
-alfa = '0abcdefghklmnoprstw'
+alfa = 'abcdefghklmnoprstw~'
 N = len(alfa)
 
 
@@ -31,8 +31,11 @@ def zesar_get_t(c, a_i, b_i):
 def zesar_rashifr(cc, a_i, b_i):
     tt = ''
     for c in cc:
-        c = alfa.index(c)
-        tt += (alfa[zesar_get_t(c, a_i, b_i)])
+        if c == ' ':
+            tt += c
+        else:
+            c = alfa.index(c)
+            tt += (alfa[zesar_get_t(c, a_i, b_i)])
     return tt
 
 
@@ -42,7 +45,7 @@ def zesar(cc, c1, t1, c2, t2):
 
 
 def main():
-    print(zesar('lassfbfnst', 's', 'l', 'f', 'o'))
+    print(zesar('lassf bfnst', 's', 'l', 'f', 'o'))
 
 
 if __name__ == "__main__":
