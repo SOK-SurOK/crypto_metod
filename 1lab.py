@@ -31,7 +31,7 @@ def zesar_get_t(c, a_i, b_i):
 def zesar_rashifr(cc, a_i, b_i):
     tt = ''
     for c in cc:
-        if c == ' ':
+        if c == ' ' or c == '\n':
             tt += c
         else:
             c = alfa.index(c)
@@ -44,8 +44,23 @@ def zesar(cc, c1, t1, c2, t2):
     return zesar_rashifr(cc, a_i, b_i)
 
 
+def file_o(name):
+    content = None
+    with open(name, 'r') as sf:
+        content = sf.readlines()
+        print(content)
+    # return content
+
+
+def file_wr(name, tt):
+    with open(name, 'w') as sf:
+        sf.writelines(tt)
+
+
 def main():
     print(zesar('lassf bfnst', 's', 'l', 'f', 'o'))
+    file_o('1lab_f/Cry-Substitution-13.txt')
+    # file_wr('l1.txt', file_o('Cry-Substitution-13.txt'))
 
 
 if __name__ == "__main__":
