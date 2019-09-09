@@ -1,4 +1,6 @@
-alfa = 'abcdefghklmnoprstw~'
+from tqdm import tqdm
+#alfa = 'abcdefghklmnoprstw~'
+alfa = 'abcdefghijklmnopqrstuvwxyz'
 N = len(alfa)
 
 
@@ -11,16 +13,23 @@ def egcd(a, b):
 
 
 def mult_obr(x):
+    x_past = x
     g, x, y = egcd(x, N)
     if g != 1:
-        raise Exception('мультпликативно обратного не существует')
+        raise Exception('мультпликативно обратного к ' + str(x_past) + ' по ' + str(N) + ' не существует')
     else:
         return x % N
 
 
 def zesar_get_ab_i(c1, t1, c2, t2):
-    a_i = (((t1 - t2) % N) * mult_obr((c1 - c2))) % N
+    a_i = (((t1 - t2) % N) * mult_obr((c1 - c2) % N)) % N
     b_i = (t1 + ((-(a_i * c1)) % N)) % N
+
+    # print('t1 t2 c1 c2')
+    # print(str(t1) + ' ' + str(t2) + ' ' + str(c1) + ' ' + str(c2))
+    # print('a_i b_i')
+    # print(str(a_i) + ' ' + str(b_i))
+
     return a_i, b_i
 
 
@@ -31,7 +40,7 @@ def zesar_get_t(c, a_i, b_i):
 def zesar_rashifr(cc, a_i, b_i):
     tt = ''
     for c in cc:
-        if c == ' ' or c == '\n':
+        if alfa.find(c) == -1:
             tt += c
         else:
             c = alfa.index(c)
@@ -45,11 +54,10 @@ def zesar(cc, c1, t1, c2, t2):
 
 
 def file_o(name):
-    content = None
     with open(name, 'r') as sf:
         content = sf.readlines()
-        print(content)
-    # return content
+        # print(content)
+    return content
 
 
 def file_wr(name, tt):
@@ -57,9 +65,32 @@ def file_wr(name, tt):
         sf.writelines(tt)
 
 
+def rand(vxod, must):
+    kol = 0
+    try_kol = 0
+    for c1 in tqdm(alfa):
+        for c2 in alfa:
+            for t1 in alfa:
+                for t2 in alfa:
+                    z = None
+                    kol += 1
+                    try:
+                        z = zesar(vxod, c1, t1, c2, t2)
+                    except Exception:
+                        try_kol += 1
+                    if z == must:
+                        print('t1 t2 c1 c2')
+                        print(str(t1) + ' ' + str(t2) + ' ' + str(c1) + ' ' + str(c2))
+    print()
+    print(kol)
+    print(try_kol)
+
+
 def main():
-    print(zesar('lassf bfnst', 's', 'l', 'f', 'o'))
-    file_o('1lab_f/Cry-Substitution-13.txt')
+    rand('cwcugun', 'evening')
+    # print(zesar(file_o('1lab_f/Cry-Substitution-13.txt')[0], 'c', 'c', 'l', 'z'))
+    # print(zesar('la', 's', 'l', 'f', 'o'))
+    # file_o('1lab_f/Cry-Substitution-13.txt')
     # file_wr('l1.txt', file_o('Cry-Substitution-13.txt'))
 
 
